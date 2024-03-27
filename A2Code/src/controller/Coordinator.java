@@ -120,6 +120,7 @@ public class Coordinator {
      * Allows the user to search for toys based on various criteria.
      */
     private static void searchToys() {
+        saveToysToFile();
         ToyStoreMenu.drawSearchMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter your choice: ");
@@ -199,7 +200,7 @@ public class Coordinator {
                 }
                 System.out.println("Press Enter to continue...");
                 scanner.nextLine(); 
-                System.out.println("Transaction cancelled. You can continue browsing our toys.");
+                searchToys();
             }
         } else {
             System.out.println("Error: Toy not found.");
@@ -253,6 +254,7 @@ private static void addToy() {
     try {
     	if (price < 0) {
         	throw new NegativePrice();
+            
     	}
     } catch (NegativePrice e) {
     	e.printStackTrace();
