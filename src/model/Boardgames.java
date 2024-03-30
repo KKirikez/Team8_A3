@@ -98,16 +98,10 @@ public class Boardgames extends Toy {
      */
     @Override
     public String toString() {
-        return "Category: " + getType() +
-                ", Serial Number: " + getSerialNumber() +
-                ", Name: " + getName() +
-                ", Brand: " + getBrand() +
-                ", Price: " + getPrice() +
-                ", Available Units: " + getAvailableCount() +
-                ", Minimum Age: " + getAgeAppropriate() +
-                ", Minimum Players: " + minPlayers +
-                ", Max Players: " + maxPlayers +
-                ", Designers: " + designers;
+        return super.toString() + 
+                ", Minimum Players: " + getMinPlayers() +
+                ", Max Players: " + getMaxPlayers() +
+                ", Designers: " + getDesigners();
     }
 
     /**

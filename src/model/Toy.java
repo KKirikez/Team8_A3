@@ -170,16 +170,16 @@ public abstract class Toy {
 	public abstract String toDatabase();
 	
 	@Override
-    public String toString() {
-        return "Toy{" +
-            "serialNumber='" + serialNumber + '\'' +
-            ", name='" + name + '\'' +
-            ", brand='" + brand + '\'' +
-            ", price=" + price +
-            ", availableCount=" + availableCount +
-            ", ageAppropriate=" + ageAppropriate +
-            '}';
-}
+	public String toString() {
+	    return "Category: " + getType() +
+	            ", Serial Number: " + getSerialNumber() +
+	            ", Name: " + getName() +
+	            ", Brand: " + getBrand() +
+	            ", Price: $" + getPrice() +
+	            ", Available Units: " + getAvailableCount() +
+	            ", Minimum Age: " + getAgeAppropriate();
+	}
+    
 
 
 }

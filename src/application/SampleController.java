@@ -20,7 +20,6 @@ import java.util.Scanner;
 import controller.Coordinator;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import model.Toy;
 import model.Figures;
@@ -112,12 +111,12 @@ public class SampleController implements Initializable {
         serialNumInput.clear();
         nameInput.clear();
         typeInput.clear();
-        resultsListView.setItems(null); // Clear search results
+        resultsListView.setItems(null);
     }
 
     @FXML
     void searchButtonPressed(javafx.event.ActionEvent event) {
-    	String searchTerm = null;
+        String searchTerm = null;
         String parameterType = null;
 
         if (!serialNumInput.getText().trim().isEmpty()) {
@@ -155,5 +154,4 @@ public class SampleController implements Initializable {
             });
         }
     }
-
 }
