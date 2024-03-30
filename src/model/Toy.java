@@ -168,4 +168,10 @@ public abstract class Toy {
      * @return the database representation of the toy
      */
 	public abstract String toDatabase();
+	
+	@Override
+	public String toString() {
+	    return name + " - " + brand + " - $" + price;
+	}
+
 }

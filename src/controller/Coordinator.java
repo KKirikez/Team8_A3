@@ -119,7 +119,7 @@ public class Coordinator {
     /**
      * Allows the user to search for toys based on various criteria.
      */
-    private static void searchToys() {
+    public static void searchToys() {
         ToyStoreMenu.drawSearchMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter your choice: ");
@@ -482,7 +482,7 @@ private static void purchaseToy(String target, String parameterType, Scanner sca
      * @param parameterType The type of parameter to compare (e.g., "Serial", "Name", "Type").
      * @return A list of matching toys.
      */
-    private static List<Toy> compareToys(Object target, String parameterType) {
+    public static List<Toy> compareToys(Object target, String parameterType) {
         List<Toy> matchingToys = new ArrayList<>();
         String targetString = ((String) target).toLowerCase();
         switch (parameterType) {
@@ -512,7 +512,14 @@ private static void purchaseToy(String target, String parameterType, Scanner sca
         return matchingToys;
     }
     
-    
+    public static List<Toy> searchToysByName(String name) {
+        System.out.println("Searching for name: " + name);
+        List<Toy> results = compareToys(name, "Name");
+        System.out.println("Found " + results.size() + " results");
+        return results;
+    }
+
+
     /**
      * Determines the type of toy based on the first digit of its serial number.
      * 
@@ -542,4 +549,6 @@ private static void purchaseToy(String target, String parameterType, Scanner sca
     	        return "Error";
     	}
     }
+  
+   
 }

@@ -22,7 +22,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="listView" layoutX="250.0" layoutY="39.0" prefHeight="525.0" prefWidth="495.0" />
+                        <ListView fx:id="resultsListView" layoutX="250.0" layoutY="39.0" prefHeight="525.0" prefWidth="495.0" />
                         <Label alignment="CENTER" layoutX="247.0" layoutY="6.0" prefHeight="17.0" prefWidth="481.0" text="Welcome to the Toy Store Company!" textAlignment="CENTER">
                            <font>
                               <Font size="18.0" />
