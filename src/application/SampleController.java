@@ -81,27 +81,30 @@ public class SampleController {
     }
 
     @FXML
-    void searchButtonPressed(ActionEvent event) {
-        String searchTerm;
-        String parameterType;
-        
-        if (serialNumSort.isSelected()) {
-            searchTerm = serialNumInput.getText();
-            parameterType = "Serial";
-        } else if (nameSort.isSelected()) {
-            searchTerm = nameInput.getText();
-            parameterType = "Name";
-        } else if (typeSort.isSelected()) {
-            searchTerm = typeInput.getText();
-            parameterType = "Type";
-        } else {
-            searchTerm = nameInput.getText();
-            parameterType = "Name";
-        }
-        
-        List<Toy> results = Coordinator.compareToys(searchTerm, parameterType);
-        listView.setItems(FXCollections.observableArrayList(results));
+void searchButtonPressed(ActionEvent event) {
+    String searchTerm = null;
+    String parameterType = null;
+    
+    if (!serialNumInput.getText().trim().isEmpty()) {
+        searchTerm = serialNumInput.getText().trim();
+        parameterType = "Serial";
     }
+    else if (!nameInput.getText().trim().isEmpty()) {
+        searchTerm = nameInput.getText().trim();
+        parameterType = "Name";
+    }
+    else if (!typeInput.getText().trim().isEmpty()) {
+        searchTerm = typeInput.getText().trim();
+        parameterType = "Type";
+    }
+    
+    if (searchTerm != null && parameterType != null) {
+        List<Toy> results = Coordinator.compareToys(searchTerm, parameterType);
+        resultsListView.setItems(FXCollections.observableArrayList(results));
+    } else {
+        System.out.println("Please enter search criteria in one of the fields.");
+    }
+}
 
     @FXML
     void sortButtonPressed(ActionEvent event) {

@@ -482,35 +482,32 @@ private static void purchaseToy(String target, String parameterType, Scanner sca
      * @param parameterType The type of parameter to compare (e.g., "Serial", "Name", "Type").
      * @return A list of matching toys.
      */
-    public static List<Toy> compareToys(Object target, String parameterType) {
+    public static List<Toy> compareToys(String target, String parameterType) {
         List<Toy> matchingToys = new ArrayList<>();
-        String targetString = ((String) target).toLowerCase();
-        switch (parameterType) {
-            case "Serial":
-                for (Toy toy : toys) {
-                    if (toy.getSerialNumber().equals(target)) {
+        String targetString = target.toLowerCase();
+        
+        for (Toy toy : toys) { 
+            switch (parameterType) {
+                case "Serial":
+                    if (toy.getSerialNumber().equalsIgnoreCase(target)) {
                         matchingToys.add(toy);
                     }
-                }
-                break;
-            case "Name":
-                // This part is for partial, case-insensitive matching
-                for (Toy toy : toys) {
+                    break;
+                case "Name":
                     if (toy.getName().toLowerCase().contains(targetString)) {
                         matchingToys.add(toy);
                     }
-                }
-                break;
-            case "Type":
-                for (Toy toy : toys) {
-                    if (toy.getType().equalsIgnoreCase((String) target)) {
+                    break;
+                case "Type":
+                    if (toy.getType().equalsIgnoreCase(target)) {
                         matchingToys.add(toy);
                     }
-                }
-                break;
+                    break;
+            }
         }
         return matchingToys;
     }
+
     
     public static List<Toy> searchToysByName(String name) {
         System.out.println("Searching for name: " + name);
