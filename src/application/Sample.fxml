@@ -21,14 +21,14 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="listView" layoutX="247.0" layoutY="39.0" prefHeight="525.0" prefWidth="483.0" />
+                        <ListView fx:id="listView" layoutX="250.0" layoutY="39.0" prefHeight="525.0" prefWidth="495.0" />
                         <Label alignment="CENTER" layoutX="247.0" layoutY="6.0" prefHeight="17.0" prefWidth="481.0" text="Welcome to the Toy Store Company!" textAlignment="CENTER">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
                         <Line endX="530.0" layoutX="214.0" layoutY="33.0" startX="-214.0" />
-                        <Line endX="146.0" layoutX="101.0" layoutY="169.0" startX="-100.0" />
+                        <Line endX="149.0" layoutX="101.0" layoutY="169.0" startX="-100.0" />
                         <Button fx:id="clearButton" layoutX="12.0" layoutY="539.0" mnemonicParsing="false" onAction="#clearButtonPressed" prefHeight="25.0" prefWidth="225.0" text="Clear" />
                         <TextField fx:id="serialNumInput" layoutX="97.0" layoutY="187.0" prefHeight="25.0" prefWidth="136.0" />
                         <Label layoutX="10.0" layoutY="191.0" text="Serial Number" />
@@ -42,7 +42,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <RadioButton fx:id="serialNumSort" layoutX="10.0" layoutY="77.0" mnemonicParsing="false" onAction="#sortButtonPressed" text="Serial Number">
+                        <RadioButton fx:id="serialNumSort" layoutX="10.0" layoutY="77.0" mnemonicParsing="false" onAction="#sortButtonPressed" selected="true" text="Serial Number">
                            <toggleGroup>
                               <ToggleGroup fx:id="sortButtons" />
                            </toggleGroup>
@@ -60,7 +60,26 @@
           </Tab>
             <Tab text="Remove Toy">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="removeListView" layoutX="249.0" layoutY="39.0" prefHeight="525.0" prefWidth="495.0" />
+                        <Label alignment="CENTER" layoutX="263.0" layoutY="1.0" prefHeight="17.0" prefWidth="481.0" text="Remove Toy" textAlignment="CENTER">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Line endX="530.0" layoutX="217.0" layoutY="33.0" startX="-214.0" />
+                        <Label layoutX="14.0" layoutY="39.0" text="Enter Toy Serial Number">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Line endX="32.0" layoutX="217.0" layoutY="96.0" startX="-214.0" />
+                        <TextField fx:id="removeSearchBox" layoutX="14.0" layoutY="116.0" prefHeight="25.0" prefWidth="222.0" />
+                        <Button fx:id="removeSearchButton" layoutX="16.0" layoutY="170.0" mnemonicParsing="false" onAction="#removeSearchButton" prefHeight="25.0" prefWidth="221.0" text="Search" />
+                        <Button fx:id="removeButton" layoutX="15.0" layoutY="521.0" mnemonicParsing="false" onAction="#removeButton" prefHeight="25.0" prefWidth="221.0" text="Remove" />
+                        <Label fx:id="removeYouSure" layoutX="16.0" layoutY="488.0" prefHeight="17.0" prefWidth="219.0" />
+                     </children></AnchorPane>
               </content>
             </Tab>
         </tabs>
