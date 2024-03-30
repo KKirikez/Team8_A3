@@ -24,7 +24,7 @@ public class SampleController {
     private ListView<Toy> listView; 
 
     @FXML
-    private TextField nameImput; 
+    private TextField nameInput; 
 
     @FXML
     private RadioButton nameSort;
@@ -82,19 +82,31 @@ public class SampleController {
 
     @FXML
     void searchButtonPressed(ActionEvent event) {
-        String searchName = nameImput.getText(); 
-        System.out.println("WHY AIN'T THIS SHIT WORKING");
-
-        new Thread(() -> {
-            List<Toy> results = Coordinator.searchToysByName(searchName);
-            Platform.runLater(() -> {
-                resultsListView.setItems(FXCollections.observableArrayList(results));
-            });
-        }).start();
+        String searchTerm;
+        String parameterType;
+        
+        if (serialNumSort.isSelected()) {
+            searchTerm = serialNumInput.getText();
+            parameterType = "Serial";
+        } else if (nameSort.isSelected()) {
+            searchTerm = nameInput.getText();
+            parameterType = "Name";
+        } else if (typeSort.isSelected()) {
+            searchTerm = typeInput.getText();
+            parameterType = "Type";
+        } else {
+            searchTerm = nameInput.getText();
+            parameterType = "Name";
+        }
+        
+        List<Toy> results = Coordinator.compareToys(searchTerm, parameterType);
+        listView.setItems(FXCollections.observableArrayList(results));
     }
 
     @FXML
     void sortButtonPressed(ActionEvent event) {
 
     }
+    
+    
 }

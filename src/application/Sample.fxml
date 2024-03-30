@@ -38,7 +38,7 @@
                         <Label layoutX="10.0" layoutY="191.0" text="Serial Number" />
                         <Label layoutX="51.0" layoutY="227.0" text="Name" />
                         <Label layoutX="51.0" layoutY="269.0" text="Type" />
-                        <TextField fx:id="nameImput" layoutX="97.0" layoutY="223.0" prefHeight="25.0" prefWidth="136.0" />
+                        <TextField fx:id="nameInput" layoutX="97.0" layoutY="223.0" prefHeight="25.0" prefWidth="136.0" />
                         <TextField fx:id="typeInput" layoutX="97.0" layoutY="265.0" prefHeight="25.0" prefWidth="136.0" />
                         <Button fx:id="searchButton" layoutX="12.0" layoutY="476.0" mnemonicParsing="false" onAction="#searchButtonPressed" prefHeight="40.0" prefWidth="225.0" text="Search">
                            <font>
