@@ -55,7 +55,7 @@ public class Coordinator {
 /**
      * Loads toys from a file into the application's memory.
      */
-    private static void loadToysFromFile() {
+    public static void loadToysFromFile() {
         try {
             File file = new File(FILE_PATH);
             Scanner scanner = new Scanner(file);
@@ -514,6 +514,10 @@ private static void purchaseToy(String target, String parameterType, Scanner sca
         List<Toy> results = compareToys(name, "Name");
         System.out.println("Found " + results.size() + " results");
         return results;
+    }
+    
+    public static List<Toy> getToys() {
+        return toys;
     }
 
 

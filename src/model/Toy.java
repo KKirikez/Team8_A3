@@ -19,7 +19,7 @@ public abstract class Toy {
     /**
      * Constructs a Toy object with the specified attributes.
      *
-     * @param serialNumber    the serial number of the toy
+     * @param serialNumber    the serial number of the toy																																																																																																																																																																					
      * @param name            the name of the toy
      * @param brand           the brand of the toy
      * @param price           the price of the toy
