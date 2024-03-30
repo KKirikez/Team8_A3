@@ -2,22 +2,35 @@ package application;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.event.ActionEvent;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import controller.Coordinator;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import model.Toy;
+import model.Figures;
+import model.Animals;
+import model.Puzzles;
+import model.Boardgames;
 
 public class SampleController implements Initializable {
+    private static final String FILE_PATH = "res/toys.txt";
+    private static ObservableList<Toy> toys = FXCollections.observableArrayList();
 
     @FXML
     private Button clearButton;
@@ -34,7 +47,7 @@ public class SampleController implements Initializable {
     @FXML
     private Button removeSearchButton;
     @FXML
-    private Label removeYouSure;
+    private javafx.scene.control.Label removeYouSure;
     @FXML
     private ListView<Toy> resultsListView;
     @FXML
@@ -43,27 +56,68 @@ public class SampleController implements Initializable {
     private TextField serialNumInput;
     @FXML
     private TextField typeInput;
+    @FXML
+    private Button purchaseButton; 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadToysToListView();
+        loadToysFromFile();
+        listView.setItems(toys); 
+        purchaseButton.setDisable(true);
+        listView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            purchaseButton.setDisable(newSelection == null);
+        });
     }
-    
-    private void loadToysToListView() {
-        Coordinator.loadToysFromFile(); 
-        listView.setItems(FXCollections.observableArrayList(Coordinator.getToys())); 
+
+    private void loadToysFromFile() {
+        toys.clear();
+        try {
+            File file = new File(FILE_PATH);
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String toyString = scanner.nextLine();
+                Toy toy = createToyFromString(toyString);
+                if (toy != null) {
+                    toys.add(toy);
+                }
+            }
+            scanner.close();
+        } catch (IOException e) {
+            Alert alert = new Alert(AlertType.ERROR, "Failed to load toys from file: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    private Toy createToyFromString(String toyString) {
+        String[] toyArray = toyString.split(";");
+        if (toyArray.length < 2) return null;
+        
+        String type = toyArray[1];
+        switch (type) {
+            case "Figure":
+                return new Figures(toyArray[2], toyArray[3], toyArray[4], Float.parseFloat(toyArray[5]), Integer.parseInt(toyArray[6]), Integer.parseInt(toyArray[7]), toyArray[8]);
+            case "Animal":
+                return new Animals(toyArray[2], toyArray[3], toyArray[4], Float.parseFloat(toyArray[5]), Integer.parseInt(toyArray[6]), Integer.parseInt(toyArray[7]), toyArray[8], toyArray[9]);
+            case "Puzzle":
+                return new Puzzles(toyArray[2], toyArray[3], toyArray[4], Float.parseFloat(toyArray[5]), Integer.parseInt(toyArray[6]), Integer.parseInt(toyArray[7]), toyArray[8]);
+            case "Board Game":
+                return new Boardgames(toyArray[2], toyArray[3], toyArray[4], Float.parseFloat(toyArray[5]), Integer.parseInt(toyArray[6]), Integer.parseInt(toyArray[7]), Integer.parseInt(toyArray[8]), Integer.parseInt(toyArray[9]), toyArray[10]);
+            default:
+                return null; 
+        }
     }
 
     @FXML
-    void clearButtonPressed(ActionEvent event) {
-        serialNumInput.setText("");
-        nameInput.setText("");
-        typeInput.setText("");
+    void clearButtonPressed(javafx.event.ActionEvent event) {
+        serialNumInput.clear();
+        nameInput.clear();
+        typeInput.clear();
+        resultsListView.setItems(null); // Clear search results
     }
 
     @FXML
-    void searchButtonPressed(ActionEvent event) {
-        String searchTerm = null;
+    void searchButtonPressed(javafx.event.ActionEvent event) {
+    	String searchTerm = null;
         String parameterType = null;
 
         if (!serialNumInput.getText().trim().isEmpty()) {
@@ -82,4 +136,24 @@ public class SampleController implements Initializable {
             resultsListView.setItems(FXCollections.observableArrayList(results));
         }
     }
+
+    @FXML
+    void purchaseButtonPressed(javafx.event.ActionEvent event) {
+        Toy selectedToy = listView.getSelectionModel().getSelectedItem();
+        if (selectedToy != null) {
+            Alert confirmationAlert = new Alert(AlertType.CONFIRMATION, "Do you want to purchase " + selectedToy.getName() + "?", ButtonType.YES, ButtonType.NO);
+            confirmationAlert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.YES) {
+                    selectedToy.setAvailableCount(selectedToy.getAvailableCount() - 1);
+                    if (selectedToy.getAvailableCount() <= 0) {
+                        toys.remove(selectedToy);
+                    }
+                    Alert infoAlert = new Alert(AlertType.INFORMATION, "The Transaction Successfully Terminated!");
+                    infoAlert.showAndWait();
+                    listView.refresh(); 
+                }
+            });
+        }
+    }
+
 }

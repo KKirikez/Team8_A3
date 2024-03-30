@@ -199,7 +199,7 @@ public class Coordinator {
                 }
                 System.out.println("Press Enter to continue...");
                 scanner.nextLine(); 
-                System.out.println("Transaction cancelled. You can continue browsing our toys.");
+                searchToys();
             }
         } else {
             System.out.println("Error: Toy not found.");
