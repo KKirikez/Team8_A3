@@ -3,6 +3,7 @@ package application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -10,7 +11,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
 import java.net.URL;
 import java.util.List;
@@ -26,6 +29,12 @@ import model.Figures;
 import model.Animals;
 import model.Puzzles;
 import model.Boardgames;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.Initializable;
 
 public class SampleController implements Initializable {
     private static final String FILE_PATH = "res/toys.txt";
@@ -33,37 +42,61 @@ public class SampleController implements Initializable {
 
     @FXML
     private Button clearButton;
+
     @FXML
     private ListView<Toy> listView;
+
     @FXML
     private TextField nameInput;
+
     @FXML
     private Button removeButton;
+
     @FXML
     private ListView<Toy> removeListView; 
+
     @FXML
     private TextField removeSearchBox;
+
     @FXML
     private Button removeSearchButton;
+
     @FXML
     private javafx.scene.control.Label removeYouSure;
+
     @FXML
     private ListView<Toy> resultsListView;
+
     @FXML
     private Button searchButton;
+
     @FXML
     private TextField serialNumInput;
+    
     @FXML
     private TextField typeInput;
+    
     @FXML
     private Button purchaseButton; 
+    
+    @FXML
+    private RadioButton nameSort;
+    
+    @FXML
+    private RadioButton serialNumSort;
+    
+    @FXML
+    private RadioButton typeSort;
+    
+    @FXML
+    private ToggleGroup sortButtons;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadToysFromFile();
-        listView.setItems(toys); 
+        resultsListView.setItems(toys); 
         purchaseButton.setDisable(true);
-        listView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        resultsListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             purchaseButton.setDisable(newSelection == null);
         });
     }
@@ -111,28 +144,22 @@ public class SampleController implements Initializable {
         serialNumInput.clear();
         nameInput.clear();
         typeInput.clear();
-        resultsListView.setItems(null);
     }
 
     @FXML
     void searchButtonPressed(javafx.event.ActionEvent event) {
-        String searchTerm = null;
-        String parameterType = null;
+        String searchTerm = nameInput.getText().trim();
 
-        if (!serialNumInput.getText().trim().isEmpty()) {
-            searchTerm = serialNumInput.getText().trim();
-            parameterType = "Serial";
-        } else if (!nameInput.getText().trim().isEmpty()) {
-            searchTerm = nameInput.getText().trim();
-            parameterType = "Name";
-        } else if (!typeInput.getText().trim().isEmpty()) {
-            searchTerm = typeInput.getText().trim();
-            parameterType = "Type";
-        }
-
-        if (searchTerm != null && parameterType != null) {
-            List<Toy> results = Coordinator.compareToys(searchTerm, parameterType);
-            resultsListView.setItems(FXCollections.observableArrayList(results));
+        if (searchTerm.isEmpty()) {
+            resultsListView.setItems(toys);
+        } else {
+            ObservableList<Toy> filteredToys = FXCollections.observableArrayList();
+            for (Toy toy : toys) {
+                if (toy.getName().toLowerCase().contains(searchTerm.toLowerCase())) {
+                    filteredToys.add(toy);
+                }
+            }
+            resultsListView.setItems(filteredToys);
         }
     }
 
@@ -153,5 +180,20 @@ public class SampleController implements Initializable {
                 }
             });
         }
+    }
+
+    @FXML
+    void removeButton(ActionEvent event) {
+
+    }
+
+    @FXML
+    void removeSearchButton(ActionEvent event) {
+
+    }
+
+    @FXML
+    void sortButtonPressed(ActionEvent event) {
+
     }
 }
